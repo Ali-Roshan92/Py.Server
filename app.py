@@ -1,15 +1,3 @@
-from flask import Flask
-
-app = Flask(__name__)
-
-@app.route('/')
-def home():
-    return "Hello, From Zandian!"
-
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
-
-
 from flask import Flask, request, jsonify
 
 app = Flask(__name__)
@@ -19,23 +7,17 @@ data_store = {}
 
 @app.route('/', methods=['GET'])
 def home():
-    # This route responds with a simple message
-    return "Hello, Render!"
+    return "Hello, This is Test Server!"
 
 @app.route('/data', methods=['POST'])
 def receive_data():
-    # This route handles POST requests to receive data
-    # Getting the JSON data from the POST request
-    data = request.json  # Assumes data is sent in JSON format
-    # Store the received data in the data_store dictionary
-    data_store.update(data)
-    return jsonify({"message": "Data received!", "data": data}), 201  # Respond with a message and the received data
+    data = request.json  # Get JSON data from the request
+    data_store.update(data)  # Store received data
+    return jsonify({"message": "Data received!", "data": data}), 201  # Response
 
 @app.route('/data', methods=['GET'])
 def get_data():
-    # This route handles GET requests to retrieve stored data
-    return jsonify(data_store), 200  # Return the data_store dictionary as JSON
+    return jsonify(data_store), 200  # Return stored data
 
 if __name__ == '__main__':
-    # Run the Flask application
-    app.run(host='0.0.0.0', port=5000)  # Make the server accessible from any address
+    app.run(host='0.0.0.0', port=5000)
